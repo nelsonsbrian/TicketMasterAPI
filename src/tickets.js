@@ -22,7 +22,7 @@ export class Ticket {
     getEventByZip(zipcode) {
         return new Promise(function(resolve, reject) {
           let request = new XMLHttpRequest();
-          let url = `https://app.ticketmaster.com/discovery/v2/events.json?postalcode=${zipcode}&apikey=${process.env.API_KEY}`;
+          let url = `https://app.ticketmaster.com/discovery/v2/events.json?postalCode=${zipcode}&apikey=${process.env.API_KEY}`;
           request.onload = function() {
             if (this.status === 200) {
               resolve(request.response);
@@ -33,5 +33,21 @@ export class Ticket {
           request.open("GET", url, true);
           request.send();
         });
-      }    
+      }  
+      
+      getEventByCity(city) {
+        return new Promise(function(resolve, reject) {
+          let request = new XMLHttpRequest();
+          let url = `https://app.ticketmaster.com/discovery/v2/events.json?city=${city}&apikey=${process.env.API_KEY}`;
+          request.onload = function() {
+            if (this.status === 200) {
+              resolve(request.response);
+            } else {
+              reject(Error(request.statusText));
+            }
+          };
+          request.open("GET", url, true);
+          request.send();
+        });
+      } 
   }
